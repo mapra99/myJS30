@@ -5,12 +5,23 @@ fetch(endpoint)
   .then((data) => cities.push(...data));
 
 const findMatches = (wordToMatch) => {
-  cities.filter((place) => {
-    const regex = new RegExp(wordToMatch, 'gi');
-    return place.city.match(regex) || place.state.match(regex);
-  });
+  const regex = new RegExp(wordToMatch, 'gi');
+  return cities.filter((place) => place.city.match(regex) || place.state.match(regex));
 };
 
-const displayMatches = () => {
-  console.log(this.value);
+const searchInput = document.querySelector('.search');
+const suggestions = document.querySelector('.suggestions');
+
+const displayMatches = (e) => {
+  const matchArray = findMatches(e.target.value);
+  const html = matchArray.map((place) => `
+    <li>
+      <span class="name">${place.city}, ${place.state}</span>
+      <span class="population">${place.population}</span>
+    </li>
+    `).join('');
+  suggestions.innerHTML = html;
 };
+
+searchInput.addEventListener('change', displayMatches);
+searchInput.addEventListener('keyup', displayMatches);
