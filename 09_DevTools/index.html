@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Console Tricks!</title>
+</head>
+<body>
+
+  <p onClick="makeGreen()">×BREAK×DOWN×</p>
+
+  <script>
+    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+
+    function makeGreen() {
+      const p = document.querySelector('p');
+      p.style.color = '#BADA55';
+      p.style.fontSize = '50px';
+    }
+
+    // Regular
+    console.log(dogs)
+
+    // Interpolated
+    console.log('helloooo %s madarfaca', 'you')
+    console.log(`helloooo ${"you"} madarfaca`)
+    
+    // Styled
+    console.log('%c HOLII', 'font-size: 50px; font-weight: bold; color: red;')
+
+    // warning!
+    console.warn("Ooops!")
+
+    // Error :|
+    console.error("Shit!")
+
+    // Info
+    console.info("This is for true facts")
+
+    // Testing
+    console.assert(1 === 2, "WRONG!")
+
+    // clearing
+    console.clear()
+
+    // Viewing DOM Elements
+    const p = document.querySelector('p');
+    console.log(p)
+    console.dir(p)
+
+    // Grouping together
+    console.group("This is a group")
+    console.log("A log inside the group")
+    console.log("Anoother log inside the group")
+    console.groupEnd()
+
+    console.log("A log outside the group")
+
+    // counting
+    dogs.forEach(dog => console.count("A"))
+
+    // timing
+    console.time();
+    fetch("https://api.github.com/users/mapra99")
+      .then(response => response.json())
+      .then(data => console.timeEnd());
+
+  </script>
+</body>
+</html>
