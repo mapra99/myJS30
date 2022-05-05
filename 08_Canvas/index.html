@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+</head>
+<body style="touch-action: none; user-select: none;">
+<canvas id="draw" width="800" height="800" style="user-select: none;"></canvas>
+<script>
+  const canvas = document.getElementById('draw');
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  let isDrawing = false;
+  let lastX;
+  let lastY;
+  let hue = 0;
+
+  const ctx = canvas.getContext('2d');
+  ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
+  ctx.lineWidth = 10;
+
+
+  const draw = (e) => {
+    e.preventDefault();
+    if (!isDrawing) return;
+
+    console.log(e);
+
+    const { offsetX, offsetY } = e;
+
+    ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+    ctx.lineWidth = e.pressure ? e.pressure * 10 : 10;
+
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(offsetX, offsetY);
+    ctx.stroke();
+
+    lastX = offsetX;
+    lastY = offsetY;
+  }
+
+  canvas.addEventListener('pointermove', draw)
+  canvas.addEventListener('pointerdown', (e) => {
+    const { offsetX, offsetY } = e;
+    lastX = offsetX;
+    lastY = offsetY;
+    hue += 10
+
+    isDrawing = true
+  })
+  canvas.addEventListener('pointerup', () => isDrawing = false)
+  canvas.addEventListener('pointerout', () => isDrawing = false)
+</script>
+
+<style>
+  html, body {
+    margin: 0;
+  }
+</style>
+
+</body>
+</html>
